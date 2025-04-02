@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from taxi.models import *
+from taxi.models import Car, Driver, Manufacturer
 # Register your models here.
+
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
@@ -14,8 +15,12 @@ class CarAdmin(admin.ModelAdmin):
 @admin.register(Driver)
 class DriverAdmin(UserAdmin):
     list_display = UserAdmin.list_display + ("license_number", )
-    fieldsets = UserAdmin.fieldsets + (("Additional information", {"fields": ("license_number",)}),)
-    add_fieldsets = UserAdmin.add_fieldsets + (("Additional information", {"fields": ("license_number",)}),)
+    fieldsets = UserAdmin.fieldsets + (("Additional information",
+                                        {"fields": ("license_number",)
+                                         }),)
+    add_fieldsets = (UserAdmin.add_fieldsets + (("Additional information",
+                                                {"fields": ("license_number",)
+                                                 }),))
 
 
 admin.site.register(Manufacturer)
